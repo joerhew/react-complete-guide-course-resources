@@ -1,23 +1,28 @@
 import { useState } from "react"
 
+import Header from "./components/Header"
 import UserInput from "./components/UserInput"
 import Result from "./components/Result"
 
 function App() {
-  const [initialInvestment, setInitialInvestment] = useState()
-  const [annualInvestment, setAnnualInvestment] = useState()
-  const [expectedReturn, setExpectedReturn] = useState()
-  const [duration, setDuration] = useState()
+  const [initialInvestment, setInitialInvestment] = useState(10000)
+  const [annualInvestment, setAnnualInvestment] = useState(1000)
+  const [expectedReturn, setExpectedReturn] = useState(5)
+  const [duration, setDuration] = useState(10)
 
-  const handleInitialInvestmentChange = (e) => setInitialInvestment(e.target.value)
-  const handleAnnualInvestmentChange = (e) => setAnnualInvestment(e.target.value)
-  const handleExpectedReturnChange = (e) => setExpectedReturn(e.target.value)
-  const handleDurationChange = (e) => setDuration(e.target.value)
+  const handleInitialInvestmentChange = (e) => setInitialInvestment(Number(e.target.value))
+  const handleAnnualInvestmentChange = (e) => setAnnualInvestment(Number(e.target.value))
+  const handleExpectedReturnChange = (e) => setExpectedReturn(Number(e.target.value))
+  const handleDurationChange = (e) => setDuration(Number(e.target.value))
 
   return (
     <>
-      <h1 id="header">React Investment Calculator</h1>
-      <UserInput 
+      <Header />
+      <UserInput
+        initialInvestment={initialInvestment}
+        annualInvestment={annualInvestment}
+        expectedReturn={expectedReturn}
+        duration={duration} 
         onInitialInvestmentChange={handleInitialInvestmentChange}
         onAnnualInvestmentChange={handleAnnualInvestmentChange}
         onExpectedReturnChange={handleExpectedReturnChange}

@@ -1,9 +1,11 @@
 import { calculateInvestmentResults, formatter } from "../util/investment"
 
 export default function Result({ initialInvestment, annualInvestment, expectedReturn, duration }) {
+  const results = calculateInvestmentResults({ initialInvestment, annualInvestment, expectedReturn, duration })
+
   return (
     <>
-      <div id="result">
+      <section id="result">
         <table>
           <thead>
             <tr>
@@ -15,18 +17,21 @@ export default function Result({ initialInvestment, annualInvestment, expectedRe
             </tr>
           </thead>
           <tbody>
-            {Array.from({ length: 5 }).map((_, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>Value {index + 1}</td>
-                <td>Interest {index + 1}</td>
-                <td>Total Interest {index + 1}</td>
-                <td>Capital {index + 1}</td>
-              </tr>
-            ))}
+            {Array.from({ length: duration }).map((_, index) => {
+              const cumulativeInterest = results.slice(0, index + 1).reduce((acc, result) => acc + result.interest, 0)
+              return (
+                <tr key={index}>
+                  <td>{results[index].year}</td>
+                  <td>{formatter.format(results[index].valueEndOfYear)}</td>
+                  <td>{formatter.format(results[index].interest)}</td>
+                  <td>{formatter.format(cumulativeInterest)}</td>
+                  <td>{formatter.format(results[index].valueEndOfYear - cumulativeInterest)}</td>
+                </tr>
+              )
+            })}
           </tbody>
         </table>
-      </div>
+      </section>
     </>
   );
 }
