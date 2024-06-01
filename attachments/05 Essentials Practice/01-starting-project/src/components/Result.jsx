@@ -1,7 +1,7 @@
 import { calculateInvestmentResults, formatter } from "../util/investment"
 
-export default function Result({ initialInvestment, annualInvestment, expectedReturn, duration }) {
-  const results = calculateInvestmentResults({ initialInvestment, annualInvestment, expectedReturn, duration })
+export default function Result({ userInput }) {
+  const results = calculateInvestmentResults(userInput)
 
   return (
     <>
@@ -17,7 +17,7 @@ export default function Result({ initialInvestment, annualInvestment, expectedRe
             </tr>
           </thead>
           <tbody>
-            {Array.from({ length: duration }).map((_, index) => {
+            {Array.from({ length: userInput.duration }).map((_, index) => {
               const cumulativeInterest = results.slice(0, index + 1).reduce((acc, result) => acc + result.interest, 0)
               return (
                 <tr key={index}>
